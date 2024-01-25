@@ -10,6 +10,13 @@ fun main() {
 class palndromecheck() {
 
     fun is_palindrome(palindrome: String): Boolean {
+        /*
+        Checks if a string is a palindrome or not
+        Arg: Check if string is palindrome
+
+        Return: true if a string is palindrome, false if it is not a palindrome
+        */
+         */
         var len = palindrome.length
         if (len<=1){
             return true
@@ -26,21 +33,3 @@ class palndromecheck() {
 }
 
 
-
-
-/*
-def is_palindrome(string):
-    """
-    Checks if a string is a palindrome or not
-    Arg: Check if string is palindrome
-
-    Return: True if a string is palindromem, False if it is not a palindrome
-    """
-    if len(string) <= 1:
-        return True
-    else:
-        if string[0] == string[len(string) - 1]:
-            return is_palindrome(string[1 : len(string) - 1])
-        else:
-            return False
- */
