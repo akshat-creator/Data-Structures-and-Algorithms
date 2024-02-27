@@ -1,36 +1,49 @@
 package org.example
 
+import kotlin.system.measureTimeMillis
+
 fun main() {
-    // Test Heap Sort
-    val heapSort = SortingAlgorithms()
-    val arrHeap = arrayOf(4, 10, 3, 5, 1)
-    println("Original Array (Heap Sort): ${arrHeap.joinToString()}")
-    heapSort.heapSort(arrHeap)
-    println("Sorted Array (Heap Sort): ${arrHeap.joinToString()}")
+    val sortingAlgorithms = SortingAlgorithms()
+    val listSizes = listOf(100, 500, 1000, 5000, 10000) // List sizes to test
 
-    // Test Radix Sort
-    val radixSort = SortingAlgorithms()
-    val arrRadix = arrayOf(53,89,150,36,633,233)
-    println("Original Array (Radix Sort): ${arrRadix.joinToString()}")
-    radixSort.radixSort(arrRadix)
-    println("Sorted Array (Radix Sort): ${arrRadix.joinToString()}")
+    val results = mutableMapOf<Int, MutableMap<String, Long>>()
 
-    // Test Insertion Sort
+    for (size in listSizes) {
+        val randomList = generateRandomList(size)
+        val heapSortTime = measureTimeMillis {
+            sortingAlgorithms.heapSort(randomList.clone())
+        }
+        val radixSortTime = measureTimeMillis {
+            sortingAlgorithms.radixSort(randomList.clone() as Array<Int>)
+        }
+        val insertionSortTime = measureTimeMillis {
+            sortingAlgorithms.insertionSort(randomList.clone())
+        }
+        val selectionSortTime = measureTimeMillis {
+            sortingAlgorithms.selectionSort(randomList.clone())
+        }
 
-    val arrInsertion = arrayOf(12, 11, 13, 5, 6)
-    val insertionSort = SortingAlgorithms()
+        results[size] = mutableMapOf(
+            "Heap Sort" to heapSortTime,
+            "Radix Sort" to radixSortTime,
+            "Insertion Sort" to insertionSortTime,
+            "Selection Sort" to selectionSortTime
+        )
+    }
 
-    println("Original Array (Insertion Sort): ${arrInsertion.joinToString()}")
-    insertionSort.insertionSort(arrInsertion)
-    println("Sorted Array (Insertion Sort): ${arrInsertion.joinToString()}")
 
-    // Test Selection Sort
-
-    val arrSelectionSort = arrayOf(64, 25, 12, 22, 11)
-    val selectionSort = SortingAlgorithms()
-
-    println("Original Array (Selection Sort): ${arrSelectionSort.joinToString()}")
-    selectionSort.selectionSort(arrSelectionSort)
-    println("Sorted Array (Selection Sort): ${arrSelectionSort.joinToString()}")
-
+    // Print results
+    println("List Size\tHeap Sort\tRadix Sort\tInsertion Sort\tSelection Sort")
+    for ((size, times) in results) {
+        print("$size\t\t")
+        for (time in times.values) {
+            print("$time\t\t\t\t")
+        }
+        println()
+    }
 }
+
+fun generateRandomList(size: Int): Array<Int> {
+    return Array(size) { (0..size).random() }
+}
+
