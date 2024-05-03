@@ -1,32 +1,18 @@
 package org.example
 
-
 fun main() {
     // Create two square matrices
-    val matrix1 = SquareMatrix(3)
-    val matrix2 = SquareMatrix(3)
+    val size = 4
+    val matrix1 = SquareMatrix(size)
+    val matrix2 = SquareMatrix(size)
 
-    // Set values for matrix1
-    matrix1.setValue(0, 0, 1)
-    matrix1.setValue(0, 1, 2)
-    matrix1.setValue(0, 2, 3)
-    matrix1.setValue(1, 0, 4)
-    matrix1.setValue(1, 1, 5)
-    matrix1.setValue(1, 2, 6)
-    matrix1.setValue(2, 0, 7)
-    matrix1.setValue(2, 1, 8)
-    matrix1.setValue(2, 2, 9)
-
-    // Set values for matrix2
-    matrix2.setValue(0, 0, 9)
-    matrix2.setValue(0, 1, 8)
-    matrix2.setValue(0, 2, 7)
-    matrix2.setValue(1, 0, 6)
-    matrix2.setValue(1, 1, 5)
-    matrix2.setValue(1, 2, 4)
-    matrix2.setValue(2, 0, 3)
-    matrix2.setValue(2, 1, 2)
-    matrix2.setValue(2, 2, 1)
+    // Fill matrices with sample data
+    for (i in 0 until size) {
+        for (j in 0 until size) {
+            matrix1.setValue(i, j, i * size + j)
+            matrix2.setValue(i, j, (i * size + j) * 2)
+        }
+    }
 
     // Print the matrices
     println("Matrix 1:")
@@ -44,26 +30,20 @@ fun main() {
     } else {
         println("Matrices cannot be multiplied due to incompatible dimensions.")
     }
+
+    val sequence1 = "AGTACGCA"
+    val sequence2 = "TATGC"
+
+    val resultneedleman = needlemanWunsch(sequence1, sequence2)
+    val alignedSequences = backtrace(resultneedleman.tracebackMatrix, sequence1, sequence2)
+
+    println("Best alignment score: ${resultneedleman.alignmentMatrix[sequence1.length][sequence2.length]}")
+    println("Aligned Sequences:")
+    println(alignedSequences.first)
+    println(alignedSequences.second)
 }
 
-
-//fun main() {
-//    val matrixSize = 3
-//    val matrix = SquareMatrix(matrixSize)
-//
-//    // Setting values
-//    for (i in 0 until matrixSize) {
-//        for (j in 0 until matrixSize) {
-//            matrix.setValue(i, j, i + j)
-//        }
-//    }
-//
-//    // Getting and printing values
-//    println("Matrix:")
-//    for (i in 0 until matrixSize) {
-//        for (j in 0 until matrixSize) {
-//            print("${matrix.getValue(i, j)} ")
-//        }
-//        println()
-//    }
-//}
+data class AlignmentResult(
+    val alignmentMatrix: Array<IntArray>,
+    val tracebackMatrix: Array<Array<Direction>>
+)
