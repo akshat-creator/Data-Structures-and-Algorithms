@@ -1,10 +1,26 @@
 package org.example.LinkedList
 
+/**
+ * Represents a
+ * implementation of a singly linked list.
+ *
+ * @param T The type of elements stored in the linked list.
+ * @property head The reference to the first node in the linked list.
+ * @property tail The reference to the last node in the linked list.
+ * @property size The number of elements in the linked list.
+ */
+
 class OurLinkedList<T>{
 
     private var head: Node<T>? =null
     private var tail: Node<T>? =null
     private var size: Int = 0
+
+    /**
+     * Checks if the linked list is empty.
+     *
+     * @return `true` if the linked list is empty, `false` otherwise.
+     */
 
     fun isOurLinkedListEmpty() :Boolean{
         if(size == 0) {
@@ -13,6 +29,12 @@ class OurLinkedList<T>{
             return false
         }
     }
+
+    /**
+     * Returns a string representation of the linked list.
+     *
+     * @return A string representation of the linked list, indicating whether it is empty or showing its elements.
+     */
 
     override fun toString(): String {
         return if(isOurLinkedListEmpty()){
